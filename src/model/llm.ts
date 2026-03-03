@@ -127,29 +127,6 @@ const MODEL_FACTORIES: Record<string, ModelFactory> = {
       apiKey: getApiKey('TUZI_KEY'),
       configuration: {
         baseURL: 'https://api.tu-zi.com/v1',
-        fetch: async (url: any, init: any) => {
-          console.log(`\n[网络请求] URL: ${url}`);
-          console.log(`[网络请求] 方法: ${init.method}`);
-          if (init.body) {
-            try {
-              const body = JSON.parse(init.body as string);
-              console.log(`[网络请求] 参数:`, JSON.stringify(body, null, 2));
-            } catch {
-              console.log(`[网络请求] 参数 (Raw): ${init.body}`);
-            }
-          }
-          const start = Date.now();
-          try {
-            const response = await fetch(url, init);
-            const duration = Date.now() - start;
-            console.log(`[网络响应] 状态: ${response.status} (${duration}ms)`);
-            return response;
-          } catch (error) {
-            const duration = Date.now() - start;
-            console.error(`[网络请求失败] (${duration}ms):`, error);
-            throw error;
-          }
-        },
       },
     }),
 };
