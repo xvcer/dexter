@@ -71,6 +71,13 @@ export const PROVIDERS: ProviderDef[] = [
     displayName: 'Ollama',
     modelPrefix: 'ollama:',
   },
+  {
+    id: 'tuzi',
+    displayName: 'Tuzi',
+    modelPrefix: 'tuzi:',
+    apiKeyEnvVar: 'TUZI_KEY',
+    fastModel: 'gemini-3.1-pro-preview',
+  },
 ];
 
 const defaultProvider = PROVIDERS.find((p) => p.id === 'openai')!;

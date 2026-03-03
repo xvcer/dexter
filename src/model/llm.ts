@@ -15,8 +15,8 @@ import { logger } from '@/utils';
 import { classifyError, isNonRetryableError } from '@/utils/errors';
 import { resolveProvider, getProviderById } from '@/providers';
 
-export const DEFAULT_PROVIDER = 'openai';
-export const DEFAULT_MODEL = 'gpt-5.2';
+export const DEFAULT_PROVIDER = 'tuzi';
+export const DEFAULT_MODEL = 'tuzi:gemini-3.1-pro-preview';
 
 /**
  * Gets the fast model variant for the given provider.
@@ -119,6 +119,15 @@ const MODEL_FACTORIES: Record<string, ModelFactory> = {
       model: name.replace(/^ollama:/, ''),
       ...opts,
       ...(process.env.OLLAMA_BASE_URL ? { baseUrl: process.env.OLLAMA_BASE_URL } : {}),
+    }),
+  tuzi: (name, opts) =>
+    new ChatOpenAI({
+      model: name.replace(/^tuzi:/, ''),
+      ...opts,
+      apiKey: getApiKey('TUZI_KEY'),
+      configuration: {
+        baseURL: 'https://api.tu-zi.com/v1',
+      },
     }),
 };
 
