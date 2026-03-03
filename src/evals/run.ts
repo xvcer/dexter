@@ -34,9 +34,9 @@ interface Example {
 function parseCSV(csvContent: string): Example[] {
   const examples: Example[] = [];
   const lines = csvContent.split('\n');
-  
+
   let i = 1; // Skip header row
-  
+
   while (i < lines.length) {
     const result = parseRow(lines, i);
     if (result) {
@@ -52,7 +52,7 @@ function parseCSV(csvContent: string): Example[] {
       i++;
     }
   }
-  
+
   return examples;
 }
 
@@ -60,20 +60,20 @@ function parseRow(lines: string[], startIndex: number): { row: string[]; nextInd
   if (startIndex >= lines.length || !lines[startIndex].trim()) {
     return null;
   }
-  
+
   const fields: string[] = [];
   let currentField = '';
   let inQuotes = false;
   let lineIndex = startIndex;
   let charIndex = 0;
-  
+
   while (lineIndex < lines.length) {
     const line = lines[lineIndex];
-    
+
     while (charIndex < line.length) {
       const char = line[charIndex];
       const nextChar = line[charIndex + 1];
-      
+
       if (inQuotes) {
         if (char === '"' && nextChar === '"') {
           // Escaped quote
@@ -103,7 +103,7 @@ function parseRow(lines: string[], startIndex: number): { row: string[]; nextInd
         }
       }
     }
-    
+
     if (inQuotes) {
       // Continue to next line (multi-line field)
       currentField += '\n';
@@ -115,7 +115,7 @@ function parseRow(lines: string[], startIndex: number): { row: string[]; nextInd
       return { row: fields, nextIndex: lineIndex + 1 };
     }
   }
-  
+
   // Handle case where file ends while in quotes
   if (currentField) {
     fields.push(currentField);
@@ -141,20 +141,20 @@ function shuffleArray<T>(array: T[]): T[] {
 // ============================================================================
 
 async function target(inputs: { question: string }): Promise<{ answer: string }> {
-  const agent = await Agent.create({ model: 'gpt-5.2', maxIterations: 10 });
+  const agent = await Agent.create({ model: 'tuzi:gemini-3.1-pro-preview', maxIterations: 10 });
   let answer = '';
-  
+
   for await (const event of agent.run(inputs.question)) {
     if (event.type === 'done') {
       answer = event.answer;
     }
   }
-  
+
   return { answer };
 }
 
 // ============================================================================
-// Correctness evaluator - LLM-as-judge using gpt-5.2
+// Correctness evaluator - LLM-as-judge using tuzi
 // ============================================================================
 
 const EvaluatorOutputSchema = z.object({
@@ -163,7 +163,7 @@ const EvaluatorOutputSchema = z.object({
 });
 
 const llm = new ChatOpenAI({
-  model: 'gpt-5.2',
+  model: 'tuzi:gemini-3.1-pro-preview',
   apiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -231,7 +231,7 @@ function createEvaluationRunner(sampleSize?: number) {
     const client = new Client();
 
     // Create a unique dataset name for this run (sampling creates different datasets)
-    const datasetName = sampleSize 
+    const datasetName = sampleSize
       ? `dexter-finance-eval-sample-${sampleSize}-${Date.now()}`
       : 'dexter-finance-eval';
 
@@ -256,7 +256,7 @@ function createEvaluationRunner(sampleSize?: number) {
     // Create dataset if needed
     if (!dataset) {
       dataset = await client.createDataset(datasetName, {
-        description: sampleSize 
+        description: sampleSize
           ? `Finance agent evaluation (sample of ${sampleSize})`
           : 'Finance agent evaluation dataset',
       });
@@ -272,7 +272,7 @@ function createEvaluationRunner(sampleSize?: number) {
     // Generate experiment name for tracking
     const experimentName = `dexter-eval-${Date.now().toString(36)}`;
 
-    // Run evaluation manually - process each example one by one
+    // Run evaluation manually - process each example one  /** Model to use for LLM calls (e.g., 'tuzi:gemini-3.1-pro-preview', 'claude-sonnet-4-6') */
     for (const example of examples) {
       const question = example.inputs.question;
 

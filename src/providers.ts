@@ -36,7 +36,7 @@ export const PROVIDERS: ProviderDef[] = [
     displayName: 'Google',
     modelPrefix: 'gemini-',
     apiKeyEnvVar: 'GOOGLE_API_KEY',
-    fastModel: 'gemini-3-flash-preview',
+    fastModel: 'gemini-3.1-pro-preview',
   },
   {
     id: 'xai',
