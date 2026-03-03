@@ -5,14 +5,14 @@ const SETTINGS_FILE = '.dexter/settings.json';
 
 // Map legacy model IDs to provider IDs for migration
 const MODEL_TO_PROVIDER_MAP: Record<string, string> = {
-  'gpt-5.2': 'openai',
-  'claude-sonnet-4-5': 'anthropic',
-  'gemini-3': 'google',
+  'gpt-4o': 'openai',
+  'claude-sonnet-4-6': 'anthropic',
+  'gemini-3.1-pro-preview': 'tuzi',
 };
 
 interface Config {
   provider?: string;
-  modelId?: string;  // Selected model ID (e.g., "gpt-5.2", "ollama:llama3.1")
+  modelId?: string;  // Selected model ID (e.g., "gpt-4o", "ollama:llama3.1")
   model?: string;    // Legacy key, kept for migration
   [key: string]: unknown;
 }
@@ -69,23 +69,23 @@ function migrateModelToProvider(config: Config): Config {
 
 export function getSetting<T>(key: string, defaultValue: T): T {
   let config = loadConfig();
-  
+
   // Run migration if accessing provider setting
   if (key === 'provider') {
     config = migrateModelToProvider(config);
   }
-  
+
   return (config[key] as T) ?? defaultValue;
 }
 
 export function setSetting(key: string, value: unknown): boolean {
   const config = loadConfig();
   config[key] = value;
-  
+
   // If setting provider, remove legacy model key
   if (key === 'provider' && config.model) {
     delete config.model;
   }
-  
+
   return saveConfig(config);
 }

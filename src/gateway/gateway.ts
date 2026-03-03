@@ -101,7 +101,7 @@ async function handleInbound(cfg: GatewayConfig, inbound: WhatsAppInboundMessage
     const answer = await runAgentForMessage({
       sessionKey: route.sessionKey,
       query: inbound.body,
-      model: 'gemini-3.1-pro-preview',
+      model: 'tuzi:gemini-3.1-pro-preview',
       modelProvider: 'tuzi',
     });
     const durationMs = Date.now() - startedAt;
