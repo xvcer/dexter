@@ -13,7 +13,7 @@ import { createRunContext, type RunContext } from './run-context.js';
 import { AgentToolExecutor } from './tool-executor.js';
 
 
-const DEFAULT_MODEL = 'gpt-5.2';
+const DEFAULT_MODEL = 'gemini-3.1-pro-preview';
 const DEFAULT_MAX_ITERATIONS = 10;
 const MAX_OVERFLOW_RETRIES = 2;
 const OVERFLOW_KEEP_TOOL_USES = 3;
@@ -157,7 +157,7 @@ export class Agent {
 
       // Build iteration prompt with full tool results (Anthropic-style)
       currentPrompt = buildIterationPrompt(
-        query, 
+        query,
         ctx.scratchpad.getToolResults(),
         ctx.scratchpad.formatToolUsageForPrompt()
       );

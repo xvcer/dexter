@@ -73,7 +73,7 @@ export const PROVIDERS: ProviderDef[] = [
   },
   {
     id: 'tuzi',
-    displayName: 'Tuzi',
+    displayName: '兔子',
     modelPrefix: 'tuzi:',
     apiKeyEnvVar: 'TUZI_KEY',
     fastModel: 'gemini-3.1-pro-preview',

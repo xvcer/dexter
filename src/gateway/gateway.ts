@@ -47,7 +47,7 @@ async function handleInbound(cfg: GatewayConfig, inbound: WhatsAppInboundMessage
   const bodyPreview = elide(inbound.body.replace(/\n/g, ' '), 50);
   console.log(`Inbound message ${inbound.from} (${inbound.chatType}, ${inbound.body.length} chars): "${bodyPreview}"`);
   debugLog(`[gateway] handleInbound from=${inbound.from} body="${inbound.body.slice(0, 30)}..."`);
-  
+
   const route = resolveRoute({
     cfg,
     channel: 'whatsapp',
@@ -68,14 +68,14 @@ async function handleInbound(cfg: GatewayConfig, inbound: WhatsAppInboundMessage
   // Start typing indicator loop to keep it alive during long agent runs
   const TYPING_INTERVAL_MS = 5000; // Refresh every 5 seconds
   let typingTimer: ReturnType<typeof setInterval> | undefined;
-  
+
   const startTypingLoop = async () => {
     await sendComposing({ to: inbound.replyToJid, accountId: inbound.accountId });
     typingTimer = setInterval(() => {
       void sendComposing({ to: inbound.replyToJid, accountId: inbound.accountId });
     }, TYPING_INTERVAL_MS);
   };
-  
+
   const stopTypingLoop = () => {
     if (typingTimer) {
       clearInterval(typingTimer);
@@ -101,12 +101,12 @@ async function handleInbound(cfg: GatewayConfig, inbound: WhatsAppInboundMessage
     const answer = await runAgentForMessage({
       sessionKey: route.sessionKey,
       query: inbound.body,
-      model: 'gpt-5.2',
-      modelProvider: 'openai',
+      model: 'gemini-3.1-pro-preview',
+      modelProvider: 'tuzi',
     });
     const durationMs = Date.now() - startedAt;
     debugLog(`[gateway] agent answer length=${answer.length}`);
-    
+
     // Stop typing loop before sending reply
     stopTypingLoop();
 

@@ -13,7 +13,7 @@ interface Provider {
 
 const PROVIDER_MODELS: Record<string, Model[]> = {
   openai: [
-    { id: 'gpt-5.2', displayName: 'GPT 5.2' },
+    { id: 'gpt-4o', displayName: 'GPT-4o' },
     { id: 'gpt-4.1', displayName: 'GPT 4.1' },
   ],
   anthropic: [
@@ -34,7 +34,7 @@ const PROVIDER_MODELS: Record<string, Model[]> = {
     { id: 'deepseek-reasoner', displayName: 'DeepSeek R1' },
   ],
   tuzi: [
-    { id: 'gemini-3.1-pro-preview', displayName: 'Gemini 3.1 Pro (Tuzi)' },
+    { id: 'tuzi:gemini-3.1-pro-preview', displayName: 'Gemini 3.1 Pro (兔子)' },
   ],
 };
 
