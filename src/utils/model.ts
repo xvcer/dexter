@@ -34,7 +34,7 @@ const PROVIDER_MODELS: Record<string, Model[]> = {
     { id: 'deepseek-reasoner', displayName: 'DeepSeek R1' },
   ],
   tuzi: [
-    { id: 'gemini-3.1-pro-preview', displayName: 'Gemini 3.1 Pro (Tuzi)' },
+    { id: 'tuzi:gemini-3.1-pro-preview', displayName: 'Gemini 3.1 Pro (兔子)' },
   ],
 };
 
